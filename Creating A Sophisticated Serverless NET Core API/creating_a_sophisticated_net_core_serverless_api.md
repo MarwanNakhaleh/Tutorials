@@ -187,9 +187,13 @@ Now, in the search bar underneath the ```Browse``` tab, you will want to search 
 
 <a id="domain-driven-design-reference"></a>
 
-A popular paradigm for building software projects is [domain-driven design](#domain-driven-design), so we're going to create a Domain folder in our project. One of the central items will be the Course object. Create a new file Course.cs in the Domain folder. <!-- TODO: describe how to create a new file with screenshots -->
+A popular paradigm for building software projects is [domain-driven design](#domain-driven-design), so we're going to create a Domain folder in our project. One of the central items will be the Course object. 
 
-In our case, our Course will have a name, an instructor, a description, a category, and a list of associated videos. Start writing the following:
+Create a new file Course.cs in the Domain folder. To do this, right click on the Domain folder, hover over "Add", and then select "Class..." at the bottom of that menu. 
+
+![select Add class](create_new_class.png)
+
+In our case, our Course will have a name, an instructor, a description, a category, and a list of associated videos. *Inside of the class declaration* start writing the following:
 
 ```csharp
 [JsonProperty("name")]
@@ -241,7 +245,23 @@ Now you will get another error. It will say something like **"The type or namesp
 
 ### Creating the Video object
 
-Just like we did for ```Course.cs```, we are going to right click on the Domain folder and add a new item
+Just like we did for ```Course.cs```, we are going to right click on the Domain folder and add a new file ```Video.cs```. Inside of the class declaration, we are going to write the following:
+
+```csharp
+[JsonProperty("title")]
+public string Title { get; set; }
+
+[JsonProperty("title")]
+public string Description { get; set; }
+
+[JsonProperty("title")]
+public string SubsectionName { get; set; }
+
+[JsonProperty("title")]
+public string CourseName { get; set; }
+```
+
+As with what happened last time, we will get errors over ```JsonProperty```. Again, hover over the error, click on "Show potential fixes", and select to import Newtonsoft.Json.
 
 
 # Glossary
