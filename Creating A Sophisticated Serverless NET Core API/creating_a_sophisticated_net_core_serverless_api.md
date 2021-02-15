@@ -20,6 +20,8 @@ To get started, you will need the following:
 * AWS SAM CLI
 * AWS CLI
 * AWS SDK for .NET
+* Docker Desktop
+* NoSQL Workbench
 
 ## Creating the .NET project
 Open Visual Studio 2019. Click "Create a New Project". In the search bar at the top, start typing "AWS Serverless".
@@ -261,7 +263,42 @@ public string SubsectionName { get; set; }
 public string CourseName { get; set; }
 ```
 
-As with what happened last time, we will get errors over ```JsonProperty```. Again, hover over the error, click on "Show potential fixes", and select to import Newtonsoft.Json.
+As with what happened last time, we will get errors over ```JsonProperty```. Again, hover over the error, click on "Show potential fixes", and select to import Newtonsoft.Json. Feel free to delete any other import statements.
+
+## Set up configuration
+### Variables for each environment
+Now, the next thing we're going to want to do is set up our variables for our Development environment. The way this will work is, we modify appsettings.Development.json (we will want similar files called appsettings.Test.json and appsettings.Production.json). We will be using the environment names as follows:
+
+* **Development** will just be used for testing on the local machine
+* **Test** will be used for deploying to the AWS environment
+* **Prod** will be used also to deploy to AWS, but we will have a separate deploy of the Lambda function with a different name and a different CloudFormation stack
+
+Edit the contents of your appsettings.Development.json to look like this. 
+
+```json
+{
+  "AWS": {
+    "Region": "us-east-1",
+    "DynamoDB": {
+      "ServiceURL": "http://localhost:8000",
+      "TableName": "BransonSolutions_LMS_Course"
+    }
+  }
+}
+```
+
+In just a little bit, we will actually set up a local instance of DynamoDB to mimic a database while testing locally. More on that later though.
+
+Now, we will want a way to reliably access these configuration settings as variables within the code. We will create a file that gives us very easy names to use for whatever depth of variable we need. Let's actually create a whole new folder inside the project called ```Configurations```.  Inside of there, we're going to add a new class called ```ConfigurationKeys.cs```. Add the following inside of the class definition of this new class.
+
+```csharp
+public static String DynamoDBServiceURLKey = "AWS:DynamoDB:ServiceURL";
+public static String DynamoDBTableNameKey = "AWS:DynamoDB:TableName";
+```
+
+Remember the JSON structure from ```appsettings.Development.json```. To get to the TableName variable, we needed to be inside the ```AWS``` object and then inside the ```DynamoDB``` item.
+
+# Setting up DynamoDB locally
 
 
 # Glossary
